@@ -1,0 +1,35 @@
+{
+  "name": "smart-summarizer",
+  "version": "1.0.0",
+  "description": "AI-powered document summarization with citation tracking",
+  "main": "api/summarize.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "vercel-dev": "vercel dev",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "ai",
+    "summarization",
+    "google-gemini",
+    "citation-tracking",
+    "vercel"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "micro": "^9.3.4"
+  },
+  "devDependencies": {
+    "vercel": "^28.4.0"
+  },
+  "engines": {
+    "node": ">=16.x"
+  }
+}
