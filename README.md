@@ -12,6 +12,7 @@
 
 
 
+
 ## 🌟 Overview
 > ⚡ **Problem:** Reading long documents is time-consuming.  
 > ⚡ **Solution:** AI summarizes documents **automatically** with **citations intact**.  
