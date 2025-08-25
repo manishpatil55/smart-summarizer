@@ -1,17 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "rewrites": [
-    { "source": "/api/summarize", "destination": "/api/summarize.js" },
-    { "source": "/api/analyze", "destination": "/api/analyze.js" },
-    { "source": "/api/batch", "destination": "/api/batch.js" },
-    { "source": "/api/health", "destination": "/api/health.js" },
-    { "source": "/api/docs", "destination": "/api/docs.js" }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
