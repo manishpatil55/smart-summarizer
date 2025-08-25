@@ -147,9 +147,22 @@ class SmartSummarizer {
         const file = files[0];
         this.showNotification(`Processing file: ${file.name}`, 'info');
 
+        // Track file upload attempt
+        if (typeof trackEvent === 'function') {
+            trackEvent('file_upload_started', {
+                event_category: 'File Processing',
+                event_label: file.type || 'unknown',
+                custom_parameters: {
+                    file_name: file.name,
+                    file_size: file.size,
+                    file_type: file.type
+                }
+            });
+        }
+
         try {
             let text = '';
-            
+
             if (file.type === 'application/pdf') {
                 text = await this.extractTextFromPDF(file);
             } else if (file.type === 'text/plain') {
@@ -164,10 +177,38 @@ class SmartSummarizer {
             if (textArea) {
                 textArea.value = text;
                 this.showNotification('File processed successfully!', 'success');
+
+                // Track successful file processing
+                if (typeof trackEvent === 'function') {
+                    trackEvent('file_upload_success', {
+                        event_category: 'File Processing',
+                        event_label: file.type || 'unknown',
+                        value: text.length,
+                        custom_parameters: {
+                            file_name: file.name,
+                            file_size: file.size,
+                            extracted_text_length: text.length
+                        }
+                    });
+                }
             }
         } catch (error) {
             console.error('File processing error:', error);
             this.showNotification(`Error processing file: ${error.message}`, 'error');
+
+            // Track file processing error
+            if (typeof trackEvent === 'function') {
+                trackEvent('file_upload_error', {
+                    event_category: 'File Processing',
+                    event_label: error.message,
+                    custom_parameters: {
+                        file_name: file.name,
+                        file_size: file.size,
+                        file_type: file.type,
+                        error_type: error.name || 'Unknown'
+                    }
+                });
+            }
         }
     }
 
@@ -249,6 +290,14 @@ class SmartSummarizer {
     async generateSummary() {
         console.log('Generate Summary clicked!');
 
+        // Track analytics event
+        if (typeof trackEvent === 'function') {
+            trackEvent('summarization_started', {
+                event_category: 'AI Processing',
+                event_label: 'Generate Summary Button'
+            });
+        }
+
         const textArea = document.getElementById('document-text');
         const text = textArea?.value?.trim();
 
@@ -256,16 +305,42 @@ class SmartSummarizer {
 
         if (!text) {
             this.showNotification('Please enter text or upload a file', 'error');
+            if (typeof trackEvent === 'function') {
+                trackEvent('summarization_error', {
+                    event_category: 'User Error',
+                    event_label: 'No text provided'
+                });
+            }
             return;
         }
 
         if (text.length < 50) {
             this.showNotification('Text must be at least 50 characters long', 'error');
+            if (typeof trackEvent === 'function') {
+                trackEvent('summarization_error', {
+                    event_category: 'User Error',
+                    event_label: 'Text too short'
+                });
+            }
             return;
         }
 
         const options = this.getFormOptions();
         console.log('Options:', options);
+
+        // Track summarization attempt with options
+        if (typeof trackEvent === 'function') {
+            trackEvent('summarization_attempt', {
+                event_category: 'AI Processing',
+                event_label: options.mode,
+                custom_parameters: {
+                    text_length: text.length,
+                    citation_style: options.citationStyle,
+                    include_keywords: options.includeKeywords,
+                    include_sentiment: options.includeSentiment
+                }
+            });
+        }
 
         this.showLoading(true);
 
@@ -304,9 +379,35 @@ class SmartSummarizer {
             this.saveSummaryToHistory(data, text, options);
             this.showNotification('Summary generated successfully!', 'success');
 
+            // Track successful summarization
+            if (typeof trackEvent === 'function') {
+                trackEvent('summarization_success', {
+                    event_category: 'AI Processing',
+                    event_label: options.mode,
+                    value: data.metadata?.processingTime || 0,
+                    custom_parameters: {
+                        original_length: data.metadata?.originalLength || 0,
+                        summary_length: data.metadata?.summaryLength || 0,
+                        compression_ratio: data.metadata?.compressionRatio || 0
+                    }
+                });
+            }
+
         } catch (error) {
             console.error('Summary error:', error);
             this.showNotification(`Error: ${error.message}`, 'error');
+
+            // Track summarization error
+            if (typeof trackEvent === 'function') {
+                trackEvent('summarization_error', {
+                    event_category: 'API Error',
+                    event_label: error.message,
+                    custom_parameters: {
+                        error_type: error.name || 'Unknown',
+                        text_length: text.length
+                    }
+                });
+            }
         } finally {
             this.showLoading(false);
         }

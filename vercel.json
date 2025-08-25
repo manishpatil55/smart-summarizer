@@ -3,13 +3,33 @@
   "functions": {
     "api/summarize.js": {
       "runtime": "@vercel/node@18.x"
+    },
+    "api/analyze.js": {
+      "runtime": "@vercel/node@18.x"
+    },
+    "api/batch.js": {
+      "runtime": "@vercel/node@18.x"
     }
   },
   "routes": [
     { "src": "/api/summarize", "dest": "/api/summarize.js" },
+    { "src": "/api/analyze", "dest": "/api/analyze.js" },
+    { "src": "/api/batch", "dest": "/api/batch.js" },
+    { "src": "/api/health", "dest": "/api/health.js" },
+    { "src": "/api/docs", "dest": "/api/docs.js" },
     { "src": "/(.*)", "dest": "/public/$1" }
   ],
   "env": {
     "GEMINI_API_KEY": "@gemini_api_key"
-  }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization" }
+      ]
+    }
+  ]
 }

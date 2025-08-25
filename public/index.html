@@ -13,7 +13,39 @@
     
     <!-- Favicon -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
-    
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        // Replace GA_MEASUREMENT_ID with your actual Google Analytics 4 Measurement ID
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            page_title: 'Smart Summarizer Pro',
+            page_location: window.location.href
+        });
+
+        // Custom event tracking function
+        function trackEvent(eventName, parameters = {}) {
+            gtag('event', eventName, {
+                event_category: 'Smart Summarizer',
+                event_label: parameters.label || '',
+                value: parameters.value || 0,
+                ...parameters
+            });
+        }
+
+        // Track page views
+        function trackPageView(pageName) {
+            gtag('config', 'GA_MEASUREMENT_ID', {
+                page_title: pageName,
+                page_location: window.location.href
+            });
+        }
+    </script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
