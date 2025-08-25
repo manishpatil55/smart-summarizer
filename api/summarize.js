@@ -1,10 +1,14 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
+const config = require('./config');
+const { validateApiKey, validateText, createPrompt, formatResponse, logRequest } = require('./utils');
 
 module.exports = async (req, res) => {
+  const startTime = Date.now();
+
   // Set CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   // Handle preflight request
   if (req.method === 'OPTIONS') {
@@ -16,88 +20,85 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { text, length, citationStyle, focusAreas } = req.body;
+    // Extract and validate request data
+    const {
+      text,
+      length = 50,
+      citationStyle = 'NUMERIC',
+      focusAreas = '',
+      mode = 'DETAILED',
+      language = 'en',
+      includeKeywords = false,
+      includeSentiment = false
+    } = req.body;
 
-    console.log('=== SUMMARIZATION REQUEST ===');
-    console.log('Request received at:', new Date().toISOString());
-    console.log('Text length:', text ? text.length : 0);
-    console.log('Summary length:', length);
-    console.log('Citation style:', citationStyle);
-    console.log('Focus areas:', focusAreas);
+    // Log request
+    logRequest(req, {
+      textLength: text ? text.length : 0,
+      mode,
+      citationStyle,
+      includeKeywords,
+      includeSentiment
+    });
 
-    // Validate input
-    if (!text || text.trim().length === 0) {
-      console.log('ERROR: No text provided');
-      return res.status(400).json({ error: 'Text is required and cannot be empty' });
-    }
-
-    if (text.length < 50) {
-      console.log('ERROR: Text too short');
-      return res.status(400).json({ error: 'Text must be at least 50 characters long for meaningful summarization' });
-    }
-
-    // Check if API key is available
-    if (!process.env.GEMINI_API_KEY) {
-      console.error('ERROR: GEMINI_API_KEY environment variable is not set');
-      return res.status(500).json({
-        error: 'API key not configured',
-        details: 'Please set the GEMINI_API_KEY environment variable'
+    // Validate text input
+    const textValidation = validateText(text);
+    if (!textValidation.valid) {
+      return res.status(400).json({
+        success: false,
+        error: textValidation.error,
+        code: 'INVALID_INPUT'
       });
     }
 
-    // Validate API key format
-    const apiKey = process.env.GEMINI_API_KEY.trim();
-    if (!apiKey.startsWith('AIzaSy')) {
-      console.error('ERROR: Invalid API key format - does not start with AIzaSy');
+    // Validate API key
+    const apiKeyValidation = validateApiKey(process.env.GEMINI_API_KEY);
+    if (!apiKeyValidation.valid) {
+      console.error('API Key validation failed:', apiKeyValidation.error);
       return res.status(500).json({
-        error: 'Invalid API key format',
-        details: 'Gemini API key should start with "AIzaSy"',
+        success: false,
+        error: config.ERRORS.INVALID_API_KEY,
+        details: apiKeyValidation.error,
         code: 'INVALID_API_KEY'
       });
     }
 
-    if (apiKey.length !== 39) {
-      console.error('ERROR: Invalid API key length:', apiKey.length, 'expected: 39');
-      return res.status(500).json({
-        error: 'Invalid API key length',
-        details: `Gemini API key should be exactly 39 characters long. Your key is ${apiKey.length} characters. Please get a new API key from Google AI Studio.`,
-        code: 'INVALID_API_KEY'
-      });
-    }
+    const apiKey = apiKeyValidation.key;
+    const cleanText = textValidation.text;
 
-    console.log('API Key validation passed (length:', apiKey.length, ')');
-    console.log('API Key prefix:', apiKey.substring(0, 10) + '...');
+    console.log('=== PROCESSING SUMMARIZATION ===');
+    console.log('Mode:', mode);
+    console.log('Text length:', cleanText.length);
+    console.log('API Key validated successfully');
 
     // Initialize Google Gemini API
-    console.log('Initializing Gemini API...');
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Using correct model name
+    const model = genAI.getGenerativeModel({
+      model: config.GEMINI.MODEL,
+      generationConfig: {
+        temperature: config.GEMINI.TEMPERATURE,
+        topP: config.GEMINI.TOP_P,
+        topK: config.GEMINI.TOP_K,
+        maxOutputTokens: 2048,
+      }
+    });
 
-    // Create simplified prompt for summarization
-    const maxTextLength = 8000; // Reduced to avoid token limits
-    const truncatedText = text.length > maxTextLength ? text.substring(0, maxTextLength) + '...' : text;
+    // Create enhanced prompt
+    const prompt = createPrompt(cleanText, {
+      mode,
+      length,
+      citationStyle,
+      focusAreas,
+      language,
+      includeKeywords,
+      includeSentiment
+    });
 
-    let prompt = `Please summarize the following text at approximately ${length}% of the original length.`;
-
-    if (focusAreas) {
-      prompt += ` Focus on: ${focusAreas}.`;
-    }
-
-    prompt += ` Use ${citationStyle} citation style and preserve important references.
-
-Text to summarize:
-${truncatedText}
-
-Summary:`;
-
-    console.log('Prompt created (length:', prompt.length, ')');
     console.log('Sending request to Gemini API...');
-    console.log('Using model: gemini-1.5-flash');
-    console.log('API Key being used (first 20 chars):', apiKey.substring(0, 20) + '...');
-    console.log('Full prompt:', prompt.substring(0, 200) + '...');
+    console.log('Prompt length:', prompt.length);
 
+    // Generate summary
     const result = await model.generateContent(prompt);
-    console.log('Got result from generateContent');
     const response = result.response;
 
     if (!response) {
@@ -110,18 +111,19 @@ Summary:`;
       throw new Error('Empty summary received from Gemini API');
     }
 
-    console.log('Summary generated successfully (length:', summary.length, ')');
-    console.log('=== REQUEST COMPLETED ===');
+    const processingTime = Date.now() - startTime;
+    console.log(`Summary generated successfully in ${processingTime}ms`);
 
-    return res.status(200).json({
-      summary,
-      metadata: {
-        originalLength: text.length,
-        summaryLength: summary.length,
-        compressionRatio: Math.round((summary.length / text.length) * 100),
-        timestamp: new Date().toISOString()
-      }
+    // Format and return response
+    const formattedResponse = formatResponse(summary, cleanText, {
+      mode,
+      citationStyle,
+      includeKeywords,
+      includeSentiment,
+      processingTime
     });
+
+    return res.status(200).json(formattedResponse);
 
   } catch (error) {
     console.error('=== ERROR OCCURRED ===');

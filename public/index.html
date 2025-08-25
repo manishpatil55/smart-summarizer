@@ -3,834 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Summarizer</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <style>
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #7209b7;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4cc9f0;
-            --warning: #f72585;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-        }
-        
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--secondary);
-        }
-        
-        header p {
-            font-size: 1.2rem;
-            color: var(--gray);
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--light-gray);
-        }
-        
-        .card-header i {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-right: 15px;
-        }
-        
-        .card-header h2 {
-            font-size: 1.8rem;
-            color: var(--secondary);
-        }
-        
-        .input-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-        
-        @media (max-width: 768px) {
-            .input-section {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        .input-methods {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .input-options {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        
-        .input-option {
-            padding: 10px 20px;
-            background: var(--light-gray);
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .input-option.active {
-            background: var(--primary);
-            color: white;
-        }
-        
-        textarea {
-            width: 100%;
-            min-height: 250px;
-            padding: 15px;
-            border: 1px solid var(--light-gray);
-            border-radius: 8px;
-            resize: vertical;
-            font-size: 1rem;
-            margin-bottom: 15px;
-        }
-        
-        .file-upload {
-            border: 2px dashed var(--light-gray);
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .file-upload:hover {
-            border-color: var(--primary);
-        }
-        
-        .file-upload i {
-            font-size: 3rem;
-            color: var(--gray);
-            margin-bottom: 15px;
-        }
-        
-        .settings {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .setting-item {
-            margin-bottom: 15px;
-        }
-        
-        .setting-item label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .slider-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .slider {
-            flex: 1;
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 8px;
-            border-radius: 5px;
-            background: var(--light-gray);
-            outline: none;
-        }
-        
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--primary);
-            cursor: pointer;
-        }
-        
-        .summary-length-value {
-            font-weight: 600;
-            color: var(--primary);
-            min-width: 40px;
-            text-align: center;
-        }
-        
-        .btn {
-            padding: 12px 25px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-        }
-        
-        .btn:disabled {
-            background: var(--gray);
-            cursor: not-allowed;
-            transform: none;
-        }
-        
-        .btn-large {
-            width: 100%;
-            padding: 15px;
-            font-size: 1.1rem;
-        }
-        
-        .result-section {
-            display: none;
-        }
-        
-        .summary-container {
-            position: relative;
-            border: 1px solid var(--light-gray);
-            border-radius: 8px;
-            padding: 20px;
-            background: var(--light);
-            min-height: 200px;
-            max-height: 500px;
-            overflow-y: auto;
-        }
-        
-        .citation {
-            background: rgba(67, 97, 238, 0.1);
-            border-left: 4px solid var(--primary);
-            padding: 5px 10px;
-            margin: 10px 0;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-        
-        .citation-number {
-            font-weight: 600;
-            color: var(--primary);
-            margin-right: 5px;
-        }
-        
-        .actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-        
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--light-gray);
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 25px;
-            background: var(--success);
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateX(100%);
-            opacity: 0;
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        
-        .notification.error {
-            background: var(--warning);
-        }
-        
-        .pdf-progress {
-            margin-top: 10px;
-            display: none;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background-color: var(--light-gray);
-            border-radius: 5px;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-        
-        .progress {
-            height: 100%;
-            background-color: var(--primary);
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-    </style>
+    <title>Smart Summarizer Pro - AI-Powered Document Analysis</title>
+    <meta name="description" content="Advanced AI-powered document summarization with multi-format support, sentiment analysis, and intelligent citation tracking.">
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Smart Summarizer</h1>
-            <p>AI-powered document summarization with citation tracking for legal contracts, research articles, and more</p>
-        </header>
-        
-        <div class="card">
-            <div class="card-header">
-                <i class="fas fa-file-alt"></i>
-                <h2>Input Document</h2>
+    <div class="app-container">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="navbar-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-robot"></i>
+                    Smart Summarizer Pro
+                </a>
+                <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
             </div>
-            
-            <div class="input-section">
-                <div class="input-methods">
-                    <div class="input-options">
-                        <div class="input-option active" id="text-option">Text Input</div>
-                        <div class="input-option" id="file-option">File Upload</div>
-                    </div>
-                    
-                    <div id="text-input">
-                        <textarea placeholder="Paste your document text here..." id="document-text"></textarea>
-                    </div>
-                    
-                    <div id="file-input" style="display: none;">
-                        <div class="file-upload" id="drop-zone">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Drag & drop your file here</p>
-                            <p>or</p>
-                            <input type="file" id="file-upload" style="display: none;" accept=".txt,.pdf,.docx">
-                            <button class="btn" id="browse-btn">Browse Files</button>
-                            <p class="file-types">Supported formats: PDF, DOCX, TXT</p>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">AI-Powered Document Analysis</h1>
+                <p class="hero-subtitle">
+                    Transform your documents into intelligent summaries with advanced AI analysis, 
+                    sentiment detection, and smart citation tracking.
+                </p>
+                
+                <!-- Features Grid -->
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
                         </div>
-                        <div id="file-info"></div>
-                        <div class="pdf-progress" id="pdf-progress">
-                            <p>Extracting text from PDF: <span id="progress-text">0%</span></p>
-                            <div class="progress-bar">
-                                <div class="progress" id="progress-bar"></div>
+                        <h3 class="feature-title">AI Summarization</h3>
+                        <p class="feature-description">Multiple modes: Quick, Detailed, Academic, Business</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <h3 class="feature-title">Multi-Format</h3>
+                        <p class="feature-description">PDF, DOCX, TXT, HTML, RTF support</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="feature-title">Text Analysis</h3>
+                        <p class="feature-description">Sentiment, keywords, and topic extraction</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h3 class="feature-title">Batch Processing</h3>
+                        <p class="feature-description">Process multiple documents simultaneously</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Processing Section -->
+            <section class="processing-section">
+                <!-- Input Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-file-upload"></i>
+                        <h2>Document Input</h2>
+                    </div>
+                    <div class="card-content">
+                        <!-- Tabs -->
+                        <div class="tabs">
+                            <button class="tab active" data-tab="text">
+                                <i class="fas fa-keyboard"></i> Text Input
+                            </button>
+                            <button class="tab" data-tab="file">
+                                <i class="fas fa-file"></i> File Upload
+                            </button>
+                        </div>
+
+                        <!-- Text Input Tab -->
+                        <div class="tab-content active" id="text-tab">
+                            <div class="form-group">
+                                <label class="form-label" for="document-text">Enter your text</label>
+                                <textarea 
+                                    id="document-text" 
+                                    class="form-input form-textarea" 
+                                    placeholder="Paste your document text here... (minimum 50 characters)"
+                                    rows="8"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <!-- File Upload Tab -->
+                        <div class="tab-content" id="file-tab">
+                            <div class="file-upload-zone" id="drop-zone">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <strong>Drag & drop your file here</strong>
+                                    <p>or click to browse</p>
+                                </div>
+                                <input type="file" id="file-input" style="display: none;" 
+                                       accept=".txt,.pdf,.docx,.doc,.html,.rtf">
+                                <div class="file-types">
+                                    Supported: PDF, DOCX, TXT, HTML, RTF (max 50MB)
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="settings">
-                    <div class="setting-item">
-                        <label for="summary-length">Summary Length</label>
-                        <div class="slider-container">
-                            <input type="range" min="1" max="100" value="50" class="slider" id="summary-length">
-                            <span class="summary-length-value" id="length-value">50%</span>
+
+                <!-- Settings Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-cogs"></i>
+                        <h2>Processing Options</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="form-group">
+                            <label class="form-label" for="summary-mode">Summarization Mode</label>
+                            <select id="summary-mode" class="form-input form-select">
+                                <option value="QUICK">Quick Summary (30%)</option>
+                                <option value="DETAILED" selected>Detailed Summary (60%)</option>
+                                <option value="ACADEMIC">Academic Summary (80%)</option>
+                                <option value="BUSINESS">Business Summary (40%)</option>
+                                <option value="CUSTOM">Custom Length</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group" id="custom-length-group" style="display: none;">
+                            <label class="form-label" for="summary-length">Summary Length (%)</label>
+                            <input type="range" id="summary-length" class="form-input" 
+                                   min="10" max="90" value="50">
+                            <div style="text-align: center; margin-top: 0.5rem;">
+                                <span id="length-display">50%</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="citation-style">Citation Style</label>
+                            <select id="citation-style" class="form-input form-select">
+                                <option value="NUMERIC">Numeric [1]</option>
+                                <option value="APA">APA Style</option>
+                                <option value="MLA">MLA Style</option>
+                                <option value="CHICAGO">Chicago Style</option>
+                                <option value="HARVARD">Harvard Style</option>
+                                <option value="IEEE">IEEE Style</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="focus-areas">Focus Areas (Optional)</label>
+                            <input type="text" id="focus-areas" class="form-input" 
+                                   placeholder="e.g., methodology, conclusions, financial data">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Advanced Options</label>
+                            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                                    <input type="checkbox" id="include-keywords">
+                                    Extract keywords and key phrases
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;">
+                                    <input type="checkbox" id="include-sentiment">
+                                    Include sentiment analysis
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="actions">
+                            <button id="summarize-btn" class="btn btn-primary btn-large">
+                                <i class="fas fa-robot"></i>
+                                Generate Summary
+                            </button>
+                            <button id="analyze-btn" class="btn btn-secondary">
+                                <i class="fas fa-chart-line"></i>
+                                Analyze Text
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="setting-item">
-                        <label for="citation-style">Citation Style</label>
-                        <select id="citation-style" class="slider">
-                            <option value="numeric">Numeric [1]</option>
-                            <option value="paragraph">Paragraph Reference [Para 1.2]</option>
-                            <option value="legal">Legal Style [§ 1.2]</option>
-                        </select>
-                    </div>
-                    
-                    <div class="setting-item">
-                        <label for="focus-areas">Focus Areas (optional)</label>
-                        <input type="text" id="focus-areas" placeholder="E.g., financial terms, methodology, conclusions">
-                    </div>
-                    
-                    <button class="btn btn-large" id="summarize-btn">
-                        <i class="fas fa-robot"></i> Generate Summary
-                    </button>
                 </div>
+            </section>
+
+            <!-- Loading Section -->
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing your document with AI...</p>
+                <p>This may take a few moments</p>
             </div>
-        </div>
-        
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p>Generating your smart summary with citations...</p>
-            <p>This may take a few moments</p>
-        </div>
-        
-        <div class="card result-section" id="result-section">
-            <div class="card-header">
-                <i class="fas fa-file-contract"></i>
-                <h2>Smart Summary</h2>
-            </div>
-            
-            <div class="summary-container" id="summary-output">
-                <!-- Summary will be inserted here -->
-            </div>
-            
-            <div class="actions">
-                <button class="btn" id="copy-btn">
-                    <i class="fas fa-copy"></i> Copy to Clipboard
-                </button>
-                <button class="btn" id="download-btn">
-                    <i class="fas fa-download"></i> Download Summary
-                </button>
-                <button class="btn" id="new-summary-btn">
-                    <i class="fas fa-plus"></i> New Summary
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        <p>Smart Summarizer - AI-Powered Document Summarization with Citation Tracking</p>
-        <p>Powered by Google Gemini API | Hosted on Vercel</p>
-    </footer>
-    
-    <div class="notification" id="notification"></div>
 
-    <script>
-        // Set the PDF worker source
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
-        // DOM Elements
-        const textOption = document.getElementById('text-option');
-        const fileOption = document.getElementById('file-option');
-        const textInput = document.getElementById('text-input');
-        const fileInput = document.getElementById('file-input');
-        const documentText = document.getElementById('document-text');
-        const summaryLength = document.getElementById('summary-length');
-        const lengthValue = document.getElementById('length-value');
-        const summarizeBtn = document.getElementById('summarize-btn');
-        const loading = document.getElementById('loading');
-        const resultSection = document.getElementById('result-section');
-        const summaryOutput = document.getElementById('summary-output');
-        const copyBtn = document.getElementById('copy-btn');
-        const downloadBtn = document.getElementById('download-btn');
-        const newSummaryBtn = document.getElementById('new-summary-btn');
-        const notification = document.getElementById('notification');
-        const browseBtn = document.getElementById('browse-btn');
-        const fileUpload = document.getElementById('file-upload');
-        const dropZone = document.getElementById('drop-zone');
-        const fileInfo = document.getElementById('file-info');
-        const pdfProgress = document.getElementById('pdf-progress');
-        const progressBar = document.getElementById('progress-bar');
-        const progressText = document.getElementById('progress-text');
-
-        // Event Listeners
-        textOption.addEventListener('click', () => toggleInputMethod('text'));
-        fileOption.addEventListener('click', () => toggleInputMethod('file'));
-        summaryLength.addEventListener('input', updateLengthValue);
-        summarizeBtn.addEventListener('click', generateSummary);
-        copyBtn.addEventListener('click', copyToClipboard);
-        downloadBtn.addEventListener('click', downloadSummary);
-        newSummaryBtn.addEventListener('click', resetUI);
-        browseBtn.addEventListener('click', () => fileUpload.click());
-        fileUpload.addEventListener('change', handleFileSelect);
-
-        // Drag and drop functionality
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#4361ee';
-            dropZone.style.backgroundColor = 'rgba(67, 97, 238, 0.1)';
-        });
-
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.style.borderColor = '#e9ecef';
-            dropZone.style.backgroundColor = 'transparent';
-        });
-
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.style.borderColor = '#e9ecef';
-            dropZone.style.backgroundColor = 'transparent';
-            
-            if (e.dataTransfer.files.length) {
-                fileUpload.files = e.dataTransfer.files;
-                handleFileSelect(e);
-            }
-        });
-
-        // Functions
-        function toggleInputMethod(method) {
-            if (method === 'text') {
-                textOption.classList.add('active');
-                fileOption.classList.remove('active');
-                textInput.style.display = 'block';
-                fileInput.style.display = 'none';
-            } else {
-                textOption.classList.remove('active');
-                fileOption.classList.add('active');
-                textInput.style.display = 'none';
-                fileInput.style.display = 'block';
-            }
-        }
-
-        function updateLengthValue() {
-            lengthValue.textContent = `${summaryLength.value}%`;
-        }
-
-        async function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            fileInfo.textContent = `Selected file: ${file.name} (${formatFileSize(file.size)})`;
-            
-            // Show progress for PDF files
-            if (file.type === 'application/pdf') {
-                pdfProgress.style.display = 'block';
-                progressBar.style.width = '0%';
-                progressText.textContent = '0%';
-                
-                try {
-                    const text = await extractTextFromPDF(file);
-                    documentText.value = text;
-                    pdfProgress.style.display = 'none';
-                    showNotification('PDF text extracted successfully!');
-                } catch (error) {
-                    console.error('Error extracting PDF text:', error);
-                    pdfProgress.style.display = 'none';
-                    showNotification('Error extracting text from PDF. Please try again.', true);
-                }
-            } else if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
-                // Read text files
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    documentText.value = e.target.result;
-                };
-                reader.readAsText(file);
-            } else if (file.name.endsWith('.docx')) {
-                showNotification('DOCX files require server-side processing. Please use text or PDF files for now.', true);
-            } else {
-                showNotification('Unsupported file format. Please use PDF, TXT, or DOCX files.', true);
-            }
-        }
-
-        async function extractTextFromPDF(file) {
-            return new Promise((resolve, reject) => {
-                const fileReader = new FileReader();
-                
-                fileReader.onload = async function() {
-                    try {
-                        const typedArray = new Uint8Array(this.result);
-                        const pdf = await pdfjsLib.getDocument(typedArray).promise;
-                        const numPages = pdf.numPages;
-                        let extractedText = '';
-                        
-                        for (let i = 1; i <= numPages; i++) {
-                            // Update progress
-                            const progress = Math.round((i / numPages) * 100);
-                            progressBar.style.width = `${progress}%`;
-                            progressText.textContent = `${progress}%`;
-                            
-                            const page = await pdf.getPage(i);
-                            const textContent = await page.getTextContent();
-                            const pageText = textContent.items.map(item => item.str).join(' ');
-                            extractedText += pageText + '\n\n';
-                        }
-                        
-                        resolve(extractedText);
-                    } catch (error) {
-                        reject(error);
-                    }
-                };
-                
-                fileReader.onerror = function(error) {
-                    reject(error);
-                };
-                
-                fileReader.readAsArrayBuffer(file);
-            });
-        }
-
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-        }
-
-        function showNotification(message, isError = false) {
-            notification.textContent = message;
-            notification.classList.add('show');
-            if (isError) {
-                notification.classList.add('error');
-            } else {
-                notification.classList.remove('error');
-            }
-            
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-
-        async function generateSummary() {
-            const text = documentText.value.trim();
-            const length = summaryLength.value;
-            const citationStyle = document.getElementById('citation-style').value;
-            const focusAreas = document.getElementById('focus-areas').value;
-
-            // Enhanced validation
-            if (text === '') {
-                showNotification('Please enter some text to summarize', true);
-                return;
-            }
-
-            if (text.length < 50) {
-                showNotification('Please enter at least 50 characters for meaningful summarization', true);
-                return;
-            }
-
-            // Show loading state
-            loading.style.display = 'block';
-            summarizeBtn.disabled = true;
-            resultSection.style.display = 'none';
-
-            console.log('Starting summarization request...');
-            console.log('Text length:', text.length);
-            console.log('Settings:', { length, citationStyle, focusAreas });
-
-            try {
-                const requestData = {
-                    text,
-                    length: parseInt(length),
-                    citationStyle,
-                    focusAreas: focusAreas.trim() || null
-                };
-
-                console.log('Sending request to /api/summarize');
-
-                const response = await fetch('/api/summarize', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(requestData)
-                });
-
-                console.log('Response status:', response.status);
-                console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
-                const data = await response.json();
-                console.log('Response data:', data);
-
-                if (!response.ok) {
-                    // Enhanced error handling based on error codes
-                    let errorMessage = data.error || 'Failed to generate summary';
-
-                    switch (data.code) {
-                        case 'INVALID_API_KEY':
-                            errorMessage = 'Invalid API key. Please check your Gemini API configuration.';
-                            break;
-                        case 'QUOTA_EXCEEDED':
-                            errorMessage = 'API quota exceeded. Please try again later.';
-                            break;
-                        case 'CONTENT_BLOCKED':
-                            errorMessage = 'Content was blocked by safety filters. Please try different text.';
-                            break;
-                        case 'TIMEOUT':
-                            errorMessage = 'Request timed out. Please try again.';
-                            break;
-                        default:
-                            if (data.details) {
-                                errorMessage += ': ' + data.details;
-                            }
-                    }
-
-                    throw new Error(errorMessage);
-                }
-
-                // Check if we have a valid summary
-                if (!data.summary || data.summary.trim().length === 0) {
-                    throw new Error('Empty summary received from server');
-                }
-
-                // Format and display the summary
-                summaryOutput.innerHTML = formatSummary(data.summary);
-
-                // Show metadata if available
-                if (data.metadata) {
-                    console.log('Summary metadata:', data.metadata);
-                    const metadataInfo = `
-                        <div style="margin-top: 20px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-size: 0.9em; color: #6c757d;">
-                            <strong>Summary Statistics:</strong><br>
-                            Original: ${data.metadata.originalLength} characters<br>
-                            Summary: ${data.metadata.summaryLength} characters<br>
-                            Compression: ${data.metadata.compressionRatio}%<br>
-                            Generated: ${new Date(data.metadata.timestamp).toLocaleString()}
+            <!-- Results Section -->
+            <section class="results-section" id="results-section">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-file-contract"></i>
+                        <h2>Results</h2>
+                        <div class="actions" style="margin-left: auto;">
+                            <button id="copy-btn" class="btn btn-secondary" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                            <button id="download-btn" class="btn btn-secondary" title="Download">
+                                <i class="fas fa-download"></i>
+                            </button>
+                            <button id="new-summary-btn" class="btn btn-secondary" title="New summary">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
-                    `;
-                    summaryOutput.innerHTML += metadataInfo;
-                }
+                    </div>
+                    <div class="card-content">
+                        <div id="results-content">
+                            <!-- Results will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
 
-                loading.style.display = 'none';
-                resultSection.style.display = 'block';
-                summarizeBtn.disabled = false;
-
-                // Scroll to results
-                resultSection.scrollIntoView({ behavior: 'smooth' });
-
-                showNotification('Summary generated successfully!');
-
-            } catch (error) {
-                console.error('Summarization error:', error);
-                loading.style.display = 'none';
-                summarizeBtn.disabled = false;
-
-                // Show detailed error message
-                showNotification('Error: ' + error.message, true);
-
-                // If it's a network error, provide additional guidance
-                if (error.message.includes('fetch') || error.message.includes('network')) {
-                    setTimeout(() => {
-                        showNotification('Network error. Please check if the server is running.', true);
-                    }, 3000);
-                }
-            }
-        }
-
-        function formatSummary(summary) {
-            // If the summary is already HTML (from the API), return as is
-            if (summary.includes('<p>') || summary.includes('<div>')) {
-                return summary;
-            }
-
-            // Otherwise, format plain text with basic HTML structure
-            let formattedSummary = summary
-                // Convert line breaks to paragraph breaks
-                .split('\n\n')
-                .filter(paragraph => paragraph.trim().length > 0)
-                .map(paragraph => `<p>${paragraph.trim()}</p>`)
-                .join('');
-
-            // If no paragraphs were created, wrap the entire content
-            if (!formattedSummary.includes('<p>')) {
-                formattedSummary = `<p>${summary}</p>`;
-            }
-
-            // Enhance citation formatting
-            formattedSummary = formattedSummary
-                .replace(/\[(\d+)\]/g, '<span class="citation"><span class="citation-number">[$1]</span></span>')
-                .replace(/\n/g, '<br>');
-
-            return formattedSummary;
-        }
-
-        function copyToClipboard() {
-            const summaryText = summaryOutput.textContent;
-            navigator.clipboard.writeText(summaryText)
-                .then(() => {
-                    showNotification('Summary copied to clipboard!');
-                })
-                .catch(err => {
-                    showNotification('Failed to copy text', true);
-                    console.error('Failed to copy: ', err);
-                });
-        }
-
-        function downloadSummary() {
-            const summaryText = summaryOutput.textContent;
-            const blob = new Blob([summaryText], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'smart-summary.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            showNotification('Summary downloaded successfully!');
-        }
-
-        function resetUI() {
-            documentText.value = '';
-            fileInfo.textContent = '';
-            summaryOutput.innerHTML = '';
-            resultSection.style.display = 'none';
-            summarizeBtn.disabled = false;
-            pdfProgress.style.display = 'none';
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // Initialize
-        updateLengthValue();
-    </script>
+    <!-- JavaScript -->
+    <script src="app.js"></script>
 </body>
 </html>

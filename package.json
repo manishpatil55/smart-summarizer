@@ -1,14 +1,15 @@
 {
-  "name": "smart-summarizer",
-  "version": "1.0.0",
-  "description": "AI-powered document summarization with citation tracking",
+  "name": "smart-summarizer-pro",
+  "version": "2.0.0",
+  "description": "Advanced AI-powered document summarization with multi-format support, sentiment analysis, and intelligent citation tracking",
   "main": "api/summarize.js",
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
     "vercel-dev": "vercel dev",
     "build": "echo 'No build step required for static site'",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "test": "node test-api.js"
   },
   "keywords": [
     "ai",
@@ -24,6 +25,7 @@
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "express-rate-limit": "^8.0.1",
     "micro": "^9.3.4"
   },
   "devDependencies": {
