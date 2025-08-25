@@ -277,3 +277,4 @@ npm start
 
 <h3>📝 MIT License</h3>
 <p>This project is licensed under the MIT License –
+# Smart Summarizer Pro v2.0.0
