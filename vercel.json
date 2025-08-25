@@ -1,20 +1,8 @@
 {
   "version": 2,
   "functions": {
-    "api/summarize.js": {
-      "runtime": "@vercel/node@18.x"
-    },
-    "api/analyze.js": {
-      "runtime": "@vercel/node@18.x"
-    },
-    "api/batch.js": {
-      "runtime": "@vercel/node@18.x"
-    },
-    "api/health.js": {
-      "runtime": "@vercel/node@18.x"
-    },
-    "api/docs.js": {
-      "runtime": "@vercel/node@18.x"
+    "api/*.js": {
+      "runtime": "nodejs18.x"
     }
   },
   "rewrites": [
