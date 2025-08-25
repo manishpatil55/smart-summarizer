@@ -9,19 +9,21 @@
     },
     "api/batch.js": {
       "runtime": "@vercel/node@18.x"
+    },
+    "api/health.js": {
+      "runtime": "@vercel/node@18.x"
+    },
+    "api/docs.js": {
+      "runtime": "@vercel/node@18.x"
     }
   },
-  "routes": [
-    { "src": "/api/summarize", "dest": "/api/summarize.js" },
-    { "src": "/api/analyze", "dest": "/api/analyze.js" },
-    { "src": "/api/batch", "dest": "/api/batch.js" },
-    { "src": "/api/health", "dest": "/api/health.js" },
-    { "src": "/api/docs", "dest": "/api/docs.js" },
-    { "src": "/(.*)", "dest": "/public/$1" }
+  "rewrites": [
+    { "source": "/api/summarize", "destination": "/api/summarize.js" },
+    { "source": "/api/analyze", "destination": "/api/analyze.js" },
+    { "source": "/api/batch", "destination": "/api/batch.js" },
+    { "source": "/api/health", "destination": "/api/health.js" },
+    { "source": "/api/docs", "destination": "/api/docs.js" }
   ],
-  "env": {
-    "GEMINI_API_KEY": "@gemini_api_key"
-  },
   "headers": [
     {
       "source": "/api/(.*)",
