@@ -1,5 +1,5 @@
 <!-- Smart Summarizer Screenshot Preview -->
-<a href="https://your-website-url.com">
+<a href="https://smart-summarizer-pro.vercel.app/">
   <picture> 
     <source media="(prefers-color-scheme: dark)" srcset="public/images/summarizer-dark.png">
     <source media="(prefers-color-scheme: light)" srcset="public/images/summarizer-light.png">
