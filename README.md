@@ -61,36 +61,35 @@ flowchart TD
 
 ---
 
-🔄 Workflow
+## 🔄 Workflow
 
-Step	Action	Description
-🧾 1. Upload	User uploads PDF/DOCX/TXT	Drag & drop or browse file
-🤖 2. AI Summarization	NLP engine powered by Google Gemini API	Extractive & abstractive summaries
-🔗 3. Citation Tracking	Extracts & preserves sources	Ensures traceable references
-💾 4. Export Summary	Download summary file	PDF / DOCX / TXT formats
+### Step	Action	Description
+- 🧾 1. Upload	User uploads PDF/DOCX/TXT	Drag & drop or browse file
+- 🤖 2. AI Summarization	NLP engine powered by Google Gemini API	Extractive & abstractive summaries
+- 🔗 3. Citation Tracking	Extracts & preserves sources	Ensures traceable references
+- 💾 4. Export Summary	Download summary file	PDF / DOCX / TXT formats
 
-
----
-
-🪄 Features at a Glance
-
-✨ Automatic Summarization (Short / Medium / Long)
-📚 Accurate Citation Linking
-📁 Multi-format Support (PDF / Word / Text)
-🔍 AI-Powered Highlight & Search
-🧠 Abstractive + Extractive Modes
-☁️ Cloud Integration for Scalability
 
 ---
 
-💻 Tech Stack
+## 🪄 Features at a Glance
 
-Layer	Technology
+- ✨ Automatic Summarization (Short / Medium / Long)
+- 📚 Accurate Citation Linking
+- 📁 Multi-format Support (PDF / Word / Text)
+- 🔍 AI-Powered Highlight & Search
+- 🧠 Abstractive + Extractive Modes
+
+---
+
+## 💻 Tech Stack
+
+### Layer	Technology
 🎨 Frontend	React, Next.js
 ⚙️ Backend	Node.js, Express
 🧠 AI/NLP	Google Gemini API, HuggingFace, PyTorch
 🗄️ Database	Firebase, MongoDB
-☁️ Cloud	AWS, Firebase Hosting
+☁️ Vercel Hosting
 🧩 Utilities	PyPDF2, SpaCy, LangChain
 
 
@@ -125,30 +124,30 @@ npm start
 ```
 ---
 
-🎯 Real-World Applications
+## 🎯 Real-World Applications
 
-Sector	Use Case
-🎓 Education	Summarize research papers and academic notes
-⚖️ Legal	Summarize case documents and retain citations
-💼 Corporate	Extract insights from lengthy reports
-🗞️ Media & Journalism	Generate concise summaries for articles and news
-
-
----
-
-🔮 Future Roadmap
-
-Feature	Description
-🌍 Multi-Language Support	Summarize documents in multiple languages
-🔎 Google Scholar Integration	Auto-fetch citations for academic sources
-🛡️ Plagiarism & Authenticity Checker	Detect duplicated content for reliability
-🎙️ Voice Summary Reader	Listen to AI-generated summaries
-📱 Mobile App Version	Real-time summaries on mobile devices
+### Sector	Use Case
+- 🎓 Education	Summarize research papers and academic notes
+- ⚖️ Legal	Summarize case documents and retain citations
+- 💼 Corporate	Extract insights from lengthy reports
+- 🗞️ Media & Journalism	Generate concise summaries for articles and news
 
 
 ---
 
-📜 License
+## 🔮 Future Roadmap
+
+### Feature	Description
+- 🌍 Multi-Language Support	Summarize documents in multiple languages
+- 🔎 Google Scholar Integration	Auto-fetch citations for academic sources
+- 🛡️ Plagiarism & Authenticity Checker	Detect duplicated content for reliability
+- 🎙️ Voice Summary Reader	Listen to AI-generated summaries
+- 📱 Mobile App Version	Real-time summaries on mobile devices
+
+
+---
+
+## 📜 License
 
 <div align="center" style="border:2px solid #4CAF50; border-radius:12px; padding:20px; margin:10px; background: linear-gradient(135deg, #E8F5E9, #A5D6A7); width: 80%;">
 <h3>📝 MIT License</h3>
