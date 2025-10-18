@@ -44,18 +44,19 @@
 
 ## 🧩 Architecture Flow
 
+
 ```mermaid
 flowchart TD
-    style A fill:#f9f,stroke:#333,stroke-width:2px,color:#000
-    style B fill:#bbf,stroke:#333,stroke-width:2px,color:#000
-    style C fill:#bfb,stroke:#333,stroke-width:2px,color:#000
-    style D fill:#ffb,stroke:#333,stroke-width:2px,color:#000
-    style E fill:#fbb,stroke:#333,stroke-width:2px,color:#000
+    style A fill:#0D47A1,stroke:#1976D2,stroke-width:2px,color:#ffffff,rx:15,ry:15,font-size:16px
+    style B fill:#6A1B9A,stroke:#AB47BC,stroke-width:2px,color:#ffffff,rx:15,ry:15,font-size:16px
+    style C fill:#00897B,stroke:#26A69A,stroke-width:2px,color:#ffffff,rx:15,ry:15,font-size:16px
+    style D fill:#F9A825,stroke:#FFCA28,stroke-width:2px,color:#000000,rx:15,ry:15,font-size:16px
+    style E fill:#D32F2F,stroke:#EF5350,stroke-width:2px,color:#ffffff,rx:15,ry:15,font-size:16px
 
-    A[📂 Document Upload PDF/DOC/TXT] --> B[🤖 AI Summarizer]
+    A[📂 Document Upload<br>PDF / DOC / TXT] --> B[🤖 AI Summarizer]
     B --> C[📝 Summarization Engine]
     C --> D[📑 Citation Tracker]
-    D --> E[💾 Download: PDF/DOC/TXT]
+    D --> E[💾 Download<br>PDF / DOC / TXT]
 
 ```
 
