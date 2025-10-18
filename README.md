@@ -1,14 +1,16 @@
 <!-- Smart Summarizer Screenshot Preview -->
-<picture align="right"> 
-  <source media="(prefers-color-scheme: dark)" srcset="public/images/summarizer-dark.png">
-  <source media="(prefers-color-scheme: light)" srcset="public/images/summarizer-light.png">
-  <img 
-    src="public/images/summarizer-light.png"
-    width="420"
-    style="
-      width: 100%;"
-    src="public/images/summarizer-light.png">
-</picture>
+<a href="https://your-website-url.com">
+  <picture align="right"> 
+    <source media="(prefers-color-scheme: dark)" srcset="public/images/summarizer-dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="public/images/summarizer-light.png">
+    <img 
+      src="public/images/summarizer-light.png"
+      width="420"
+      style="
+        width: 100%;"
+      src="public/images/summarizer-light.png">
+  </picture>
+<a>
 
 ---
 <h1 align="center">⚡ Smart Summarizer Pro ⚡</h1>
