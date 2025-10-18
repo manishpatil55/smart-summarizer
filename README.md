@@ -19,7 +19,7 @@
 
 <p align="center">
   <a href="https://smart-summarizer-pro.vercel.app/">
-    <img src="https://img.shields.io/badge/🔗%20Live%20Demo-Click%20Here-blueviolet?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/👾%20Live%20Demo-Click%20Here-blueviolet?style=flat" />
   </a>
 </p>
 
@@ -143,18 +143,6 @@ npm start
 - 🛡️ Plagiarism & Authenticity Checker	Detect duplicated content for reliability
 - 🎙️ Voice Summary Reader	Listen to AI-generated summaries
 - 📱 Mobile App Version	Real-time summaries on mobile devices
-
-
----
-
-## 📜 License
-
-<div align="center" style="border:2px solid #4CAF50; border-radius:12px; padding:20px; margin:10px; background: linear-gradient(135deg, #E8F5E9, #A5D6A7); width: 80%;">
-<h3>📝 MIT License</h3>
-<p>This project is licensed under the MIT License – <b>Smart Summarizer Pro v2.0.0</b></p>
-</div>
-
-
 
 ---
 
