@@ -27,18 +27,18 @@
 
 ## 🌌 Overview
 
-> **Challenge:** Reading lengthy research papers or legal documents takes hours.  
-> **Solution:** Smart Summarizer Pro uses **AI + NLP** to **automatically summarize** content while **preserving citations** — saving time, maintaining accuracy, and improving productivity.  
+> **Challenge:** Reading lengthy research papers, legal documents, or corporate reports takes hours.  
+> **Solution:** Smart Summarizer Pro leverages **AI + NLP + Google Gemini API** to **automatically summarize** content while **preserving citations** — saving time, maintaining accuracy, and boosting productivity.  
 
 ---
 
 ## 🧠 Key Highlights
 
-💫 **AI-Powered Summaries** — Extractive + Abstractive models for high-quality insights.  
+💫 **AI-Powered Summaries** — Using **Google Gemini API** with extractive & abstractive NLP models.  
 📑 **Citation Tracking** — Retains sources and references precisely.  
-📄 **Multi-Format Output** — Export to PDF, DOCX, or TXT instantly.  
-⚙️ **Real-Time Processing** — Fast summarization with cloud acceleration.  
-🌍 **Accessible Anywhere** — Cross-platform support via browser.  
+📄 **Multi-Format Output** — Export summaries to PDF, DOCX, or TXT.  
+⚙️ **Real-Time Processing** — Fast cloud-based summarization.  
+🌍 **Accessible Anywhere** — Browser-friendly, cross-platform.  
 
 ---
 
@@ -55,23 +55,24 @@ flowchart TD
     A[📂 Document Upload PDF/DOC/TXT] --> B[🤖 AI Summarizer]
     B --> C[📝 Summarization Engine]
     C --> D[📑 Citation Tracker]
-    D --> E[💾 download: PDF/DOC/TXT]
+    D --> E[💾 Download: PDF/DOC/TXT]
 
 ```
----
-
-## 🔄 Workflow
-
-### Step	Action	Description
-- 🧾 1. Upload	User uploads PDF/DOCX/TXT	Drag & drop or browse file
-- 🤖 2. AI Summarization	NLP engine processes text	Uses transformer-based models
-- 🔗 3. Citation Tracking	Extracts & preserves sources	Ensures traceable references
-- 💾 4. Export Summary	Download summary file	PDF / DOCX / TXT formats
-
 
 ---
 
-## 🪄 Features at a Glance
+🔄 Workflow
+
+Step	Action	Description
+🧾 1. Upload	User uploads PDF/DOCX/TXT	Drag & drop or browse file
+🤖 2. AI Summarization	NLP engine powered by Google Gemini API	Extractive & abstractive summaries
+🔗 3. Citation Tracking	Extracts & preserves sources	Ensures traceable references
+💾 4. Export Summary	Download summary file	PDF / DOCX / TXT formats
+
+
+---
+
+🪄 Features at a Glance
 
 ✨ Automatic Summarization (Short / Medium / Long)
 📚 Accurate Citation Linking
@@ -82,23 +83,18 @@ flowchart TD
 
 ---
 
-## 💻 Tech Stack
+💻 Tech Stack
 
-<div align="center">
-
-
-### Layer	Technology
-- 🎨 Frontend	 
-- ⚙️ Backend	 
-- 🧠 AI/NLP	  
-- 🗄️ Database	 
-- ☁️ Cloud	 
-- 🧩 Utilities	  
-
-</div>
+Layer	Technology
+🎨 Frontend	React, Next.js
+⚙️ Backend	Node.js, Express
+🧠 AI/NLP	Google Gemini API, HuggingFace, PyTorch
+🗄️ Database	Firebase, MongoDB
+☁️ Cloud	AWS, Firebase Hosting
+🧩 Utilities	PyPDF2, SpaCy, LangChain
 
 
-
+---
 
 ## ⚙️ Installation & Setup
 
@@ -127,27 +123,27 @@ npm run server
 ```
 npm start
 ```
+---
 
-
-## 🎯 Real-World Applications
+🎯 Real-World Applications
 
 Sector	Use Case
-- 🎓 Education	Summarize research papers and academic notes
-- ⚖️ Legal	Summarize case documents and retain citations
-- 💼 Corporate	Extract insights from lengthy reports
-- 🗞️ Media & Journalism	Generate summaries for articles and news
+🎓 Education	Summarize research papers and academic notes
+⚖️ Legal	Summarize case documents and retain citations
+💼 Corporate	Extract insights from lengthy reports
+🗞️ Media & Journalism	Generate concise summaries for articles and news
 
 
 ---
 
-## 🔮 Future Roadmap
+🔮 Future Roadmap
 
-### 🚀 Feature	🌟 Description
-- 🌍 Multi-Language Support	Summarize documents in global languages
-- 🔎 Google Scholar Integration	Auto-fetch citations for academic sources
-- 🛡️ Plagiarism & Authenticity Checker	Detect duplicated content
-- 🎙️ Voice Summary Reader	Listen to AI-generated summaries
-- 📱 Mobile App Version	Summarize on-the-go
+Feature	Description
+🌍 Multi-Language Support	Summarize documents in multiple languages
+🔎 Google Scholar Integration	Auto-fetch citations for academic sources
+🛡️ Plagiarism & Authenticity Checker	Detect duplicated content for reliability
+🎙️ Voice Summary Reader	Listen to AI-generated summaries
+📱 Mobile App Version	Real-time summaries on mobile devices
 
 
 ---
@@ -166,7 +162,7 @@ Sector	Use Case
 
 <h3 align="center">🌐 Explore Live Demo</h3>
 <p align="center">
-  <a href="https://smart-summarizer-pro.vercel.app/">
+  <a href="https://smart-summarizer-pro.vercel.app/" target="_blank">
     <img src="https://img.shields.io/badge/Launch%20Now%20🚀-Smart%20Summarizer%20Pro-blueviolet?style=for-the-badge" />
   </a>
 </p>
@@ -182,12 +178,19 @@ Sector	Use Case
 </p>
 
 
+
 ---
 
-<!-- Header Section -->
+
 <p align="center">
   <img src="https://img.shields.io/badge/🤖%20AI-NLP-blue?style=for-the-badge&logo=openai" />
   <img src="https://img.shields.io/badge/🏆%20Hackathon-2025-success?style=for-the-badge&logo=hackaday" />
   <img src="https://img.shields.io/badge/📜%20License-MIT-green?style=for-the-badge" />
   <img src="https://img.shields.io/badge/🚀%20Status-Active-brightgreen?style=for-the-badge" />
 </p>
+
+
+
+
+---
+
