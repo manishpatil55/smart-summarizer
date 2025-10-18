@@ -85,12 +85,12 @@ flowchart TD
 ## 💻 Tech Stack
 
 ### Layer	Technology
-🎨 Frontend	React, Next.js
-⚙️ Backend	Node.js, Express
-🧠 AI/NLP	Google Gemini API, HuggingFace, PyTorch
-🗄️ Database	Firebase, MongoDB
-☁️ Vercel Hosting
-🧩 Utilities	PyPDF2, SpaCy, LangChain
+- 🎨 Frontend	React, Next.js
+- ⚙️ Backend	Node.js, Express
+- 🧠 AI/NLP	Google Gemini API
+- 🗄️ Database	Firebase, MongoDB
+- ☁️ Vercel Hosting
+- 🧩 Utilities	PyPDF2, SpaCy, LangChain
 
 
 ---
@@ -168,15 +168,6 @@ npm start
 
 
 
----
-
-
-<p align="center">
-  <b>💡 Transform Documents → Smarter Summaries with AI.</b><br>
-  Made with ❤️ by <b>Team Smart Summarizer Pro</b>.
-</p>
-
-
 
 ---
 
@@ -186,6 +177,7 @@ npm start
   <img src="https://img.shields.io/badge/🏆%20Hackathon-2025-success?style=for-the-badge&logo=hackaday" />
   <img src="https://img.shields.io/badge/📜%20License-MIT-green?style=for-the-badge" />
   <img src="https://img.shields.io/badge/🚀%20Status-Active-brightgreen?style=for-the-badge" />
+  ![Views](https://hits.sh/github.com/manishpatil55/smart-summarizer.svg)
 </p>
 
 
