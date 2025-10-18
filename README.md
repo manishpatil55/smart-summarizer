@@ -162,7 +162,7 @@ npm start
 <h3 align="center">🌐 Explore Live Demo</h3>
 <p align="center">
   <a href="https://smart-summarizer-pro.vercel.app/" target="_blank">
-    <img src="https://img.shields.io/badge/Launch%20Now%20🚀-Smart%20Summarizer%20Pro-blueviolet?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/Launch%20Now%20🚀-Smart%20Summarizer%20Pro-blueviolet?style=flat" />
   </a>
 </p>
 
@@ -171,17 +171,13 @@ npm start
 
 ---
 
-
 <p align="center">
-  <img src="https://img.shields.io/badge/🤖%20AI-NLP-blue?style=for-the-badge&logo=openai" />
-  <img src="https://img.shields.io/badge/🏆%20Hackathon-2025-success?style=for-the-badge&logo=hackaday" />
-  <img src="https://img.shields.io/badge/📜%20License-MIT-green?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/🚀%20Status-Active-brightgreen?style=for-the-badge" />
-  <br>
-  ![Views](https://hits.sh/github.com/manishpatil55/smart-summarizer.svg)
+  <img src="https://img.shields.io/badge/AI-NLP-blue?style=flat&logo=openai" alt="AI-NLP" />
+  <img src="https://img.shields.io/badge/Hackathon-2025-success?style=flat&logo=hackaday" alt="Hackathon 2025" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=flat" alt="License MIT" />
+  <img src="https://img.shields.io/badge/Status-Active-brightgreen?style=flat" alt="Status Active" />
+  <img src="https://hits.sh/github.com/manishpatil55/smart-summarizer.svg?label=Views" alt="Repo Views" />
 </p>
-
-
 
 
 ---
