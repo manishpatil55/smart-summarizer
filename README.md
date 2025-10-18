@@ -2,7 +2,12 @@
 <picture align="right"> 
   <source media="(prefers-color-scheme: dark)" srcset="public/images/summarizer-dark.png">
   <source media="(prefers-color-scheme: light)" srcset="public/images/summarizer-light.png">
-  <img width="420" alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="public/images/summarizer-light.png">
+  <img 
+    src="public/images/summarizer-light.png"
+    width="420"
+    style="
+      width: 100%;"
+    src="public/images/summarizer-light.png">
 </picture>
 
 ---
