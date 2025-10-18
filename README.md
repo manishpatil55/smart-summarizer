@@ -1,33 +1,9 @@
 <!-- Smart Summarizer Screenshot Preview -->
-<picture align="right" style="
-  display: inline-block;
-  float: right;
-  margin: 10px 0 20px 20px;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 4px 25px rgba(0, 255, 255, 0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-">
-  <source media="(prefers-color-scheme: dark)" 
-          srcset="@/public/images/summarizer-dark.png">
-  <source media="(prefers-color-scheme: light)" 
-          srcset="@/public/images/summarizer-light.png">
-  <img 
-    src="public/images/summarizer-light.png"
-    alt="Smart Summarizer website preview in light and dark mode"
-    width="420"
-    style="
-      width: 100%;
-      display: block;
-      border-radius: 18px;
-      transition: transform 0.3s ease, filter 0.3s ease;
-    "
-    onmouseover="this.style.transform='scale(1.03)'; this.style.filter='brightness(1.1)';"
-    onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)';"
-  >
+<picture align="right"> 
+  <source media="(prefers-color-scheme: dark)" srcset="public/images/summarizer-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="public/images/summarizer-light.png">
+  <img width="420" alt="Shows an illustrated sun in light mode and a moon with stars in dark mode." src="public/images/summarizer-light.png">
 </picture>
-
-
 
 ---
 <h1 align="center">⚡ Smart Summarizer Pro ⚡</h1>
