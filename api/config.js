@@ -2,7 +2,7 @@
 module.exports = {
   // Gemini API Configuration
   GEMINI: {
-    MODEL: "gemini-1.5-flash",
+    MODEL: "gemini-2.0-flash",
     MAX_TOKENS: 30000,
     TEMPERATURE: 0.7,
     TOP_P: 0.8,
